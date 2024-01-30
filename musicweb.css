@@ -1,0 +1,34 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Use a consistent font-family for all elements */
+body {
+    font-family: 'Dosis', sans-serif;
+}
+
+.card img{
+    border-radius: 5%;
+}
+/* Add your styles here */
+.audio-card {
+    max-width: 400px;
+    margin-top: 5rem;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+audio {
+    width: 100%;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Weeknd Song</title>
+    <link rel="stylesheet" href="musicweb.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <center>
+        <div class="audio-card" style="background-color: gray; margin-bottom: 5rem;">
+            <button onclick="window.location.href='musicweb.html';" style="margin-bottom: 1rem;"><i class="fa fa-arrow-left mr-3"></i>Back to Main Page</button>
+            <img src="https://th.bing.com/th/id/R.f281562c2c4bd152aea50ec18668c835?rik=ch75TF4zlMYPVg&riu=http%3a%2f%2fthatgrapejuice.net%2fwp-content%2fuploads%2f2016%2f09%2fthe-weekend-starboy-thatgrapejuice.jpg&ehk=UY8ZVSk%2frLCwzkat%2b4DfL476%2fohx0TwePUDW8%2f33FxU%3d&risl=&pid=ImgRaw&r=0" alt="Album Art">
+            <h1 style="font-weight: 800; font-size: larger; margin-bottom: 1rem;">Starboy</h1>
+            <audio id="audio" controls>
+                <source src="songs/starboy.mp3" type="audio/mpeg">
+            </audio>
+            <div style="background-color: white; border-radius: 5%; padding: 20px;">
+                <div id="lyrics" style="height: 55px; overflow: auto;"></div>
+            </div>
+            <div style="margin-top: 2rem;">
+                <button onclick="skipBackward()"><i class="fa fa-step-backward mr-3"></i></button>
+                <button onclick="pauseResume()"><i id="playPauseIcon" class="fa fa-play mx-3"></i></button>
+                <button onclick="skipForward()"><i class="fa fa-step-forward ml-3"></i></button>
+            </div>
+        </div>
+        
+        <script>
+            const audio = document.getElementById('audio');
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            const lyrics = document.getElementById('lyrics'); // Baru
+    
+            // Lirik lagu
+            const songLyrics = [
+            { time: 0.71, text: "Starboy" },
+            { time: 7.69, text: "(feat. Daft Punk)" },
+            { time: 16.09, text: "Im tryna put you in the worst mood, ah" },
+            { time: 18.50, text: "P1 cleaner than your church shoes, ah" },
+            { time: 21.04, text: "Milli point two just to hurt you, ah" },
+            { time: 23.67, text: "All red lamb just to tease you, ah" },
+            { time: 26.07, text: "None of these toys on lease too, ah" },
+            { time: 28.85, text: "Made your whole year in a week too, yeah" },
+            { time: 31.39, text: "Main bitch out of your league too, ah" },
+            { time: 33.83, text: "Side bitch out of your league too, ah" },
+            ];
+    
+            function skipBackward() {
+                audio.currentTime -= 10; // skip 10 seconds backward
+            }
+    
+            function pauseResume() {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseIcon.classList.remove('fa-play');
+                    playPauseIcon.classList.add('fa-pause');
+                } else {
+                    audio.pause();
+                    playPauseIcon.classList.remove('fa-pause');
+                    playPauseIcon.classList.add('fa-play');
+                }
+            }
+    
+            function skipForward() {
+                audio.currentTime += 10; // skip 10 seconds forward
+            }
+    
+            // Fungsi baru untuk menampilkan lirik
+            audio.ontimeupdate = function() {
+                for (let i = 0; i < songLyrics.length; i++) {
+                    if (audio.currentTime >= songLyrics[i].time) {
+                        lyrics.innerText = songLyrics[i].text;
+                    }
+                }
+            };
+        </script>
+    </center>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+</body>
+</html>

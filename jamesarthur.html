@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James Arthur Song</title>
+    <link rel="stylesheet" href="musicweb.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <center>
+        <div class="audio-card" style="background-color: gray; margin-bottom: 5rem;">
+            <button onclick="window.location.href='musicweb.html';" style="margin-bottom: 1rem;"><i class="fa fa-arrow-left mr-3"></i>Back to Main Page</button>
+            <img src="https://images.genius.com/8819608496104d64a6c136b5828d89c9.1000x1000x1.jpg" alt="Album Art">
+            <h1 style="font-weight: 800; font-size: larger; margin-bottom: 1rem;">Can I Be Him</h1>
+            <audio id="audio" controls>
+                <source src="songs/canibehim.mp3" type="audio/mpeg">
+            </audio>
+            <div style="background-color: white; border-radius: 5%; padding: 20px;">
+                <div id="lyrics" style="height: 55px; overflow: auto;"></div>
+            </div>
+            <div style="margin-top: 2rem;">
+                <button onclick="skipBackward()"><i class="fa fa-step-backward mr-3"></i></button>
+                <button onclick="pauseResume()"><i id="playPauseIcon" class="fa fa-play mx-3"></i></button>
+                <button onclick="skipForward()"><i class="fa fa-step-forward ml-3"></i></button>
+            </div>
+        </div>
+        
+        <script>
+            const audio = document.getElementById('audio');
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            const lyrics = document.getElementById('lyrics'); // Baru
+    
+            // Lirik lagu
+            const songLyrics = [
+            { time: 8.37, text: 'You walked into the room' },
+            { time: 11.14, text: 'And now my heart has been stolen' },
+            { time: 16.90, text: 'You took me back in time to when I was unbroken' },
+            { time: 24.43, text: 'Now youre all I want' },
+            { time: 26.94, text: 'And I knew it from the very first moment' },
+            { time: 32.94, text: 'Cause a light came on when I heard that song' },
+            { time: 38.19, text: 'And I want you to sing it again' },
+            { time: 43.70, text: 'I swear that every word you sing' },
+            { time: 47.46, text: 'You wrote them for me' },
+            { time: 52.22, text: 'Like it was a private show' },
+            { time: 55.47, text: 'But I know you never saw me' },
+            { time: 59.98, text: 'When the lights come on and Im on my own' },
+            { time: 64.49, text: 'Will you be there to sing it again?' },
+            { time: 70.49, text: 'Could I be the one you talk about in all your stories?' },
+            { time: 77.26, text: 'Can I be him?' },
+            { time: 81.77, text: 'I heard there was someone but I know he dont deserve you' },
+            { time: 89.27, text: 'If you were mine Id never let anyone hurt you no no' },
+            { time: 97.79, text: 'I wanna dry those tears, kiss those lips' },
+            { time: 102.55, text: 'Its all that Ive been thinking about' },
+            { time: 107.06, text: 'Cause a light came on when I heard that song' },
+            { time: 111.32, text: 'And I want you to sing it again' },
+            { time: 116.57, text: 'I swear that every word you sing' },
+            { time: 120.83, text: 'You wrote them for me' },
+            { time: 125.84, text: 'Like it was a private show' },
+            { time: 128.59, text: 'But I know you never saw me' },
+            { time: 133.60, text: 'When the lights come on and Im on my own' },
+            { time: 137.85, text: 'Will you be there to sing it again?' },
+            { time: 143.61, text: 'Could I be the one you talk about in all your stories?' },
+            { time: 151.37, text: 'Can I be the one?' },
+            { time: 156.14, text: 'Can I be the one?' },
+            { time: 160.14, text: 'Can I be the one?' },
+            { time: 165.14, text: 'Oh, can I, can I be him?' },
+            { time: 170.15, text: 'Wont you sing it again' },
+            { time: 173.91, text: 'Oh, when you sing it again' },
+            { time: 177.17, text: 'Can I be him' },
+            { time: 179.42, text: 'Wont you sing it again' },
+            { time: 182.67, text: 'Oh, when you sing it again' },
+            { time: 186.18, text: 'Can I be him' },
+            { time: 188.43, text: 'I swear that every word you sing' },
+            { time: 191.68, text: 'You wrote them for me' },
+            { time: 197.19, text: 'Like it was a private show' },
+            { time: 199.95, text: 'But I know you never saw me' },
+            { time: 204.96, text: 'When the lights come on and Im on my own' },
+            { time: 208.96, text: 'Will you be there, will you be there' },
+            { time: 214.72, text: 'Can I be the one you talk about in all your stories' },
+            { time: 222.48, text: 'Can I be him?' },
+            { time: 226.99, text: 'Can I be him?' },
+            { time: 231.25, text: 'Can I be him?' },
+            { time: 236.00, text: 'Can I be him?' }
+            ];
+
+    
+            function skipBackward() {
+                audio.currentTime -= 10; // skip 10 seconds backward
+            }
+    
+            function pauseResume() {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseIcon.classList.remove('fa-play');
+                    playPauseIcon.classList.add('fa-pause');
+                } else {
+                    audio.pause();
+                    playPauseIcon.classList.remove('fa-pause');
+                    playPauseIcon.classList.add('fa-play');
+                }
+            }
+    
+            function skipForward() {
+                audio.currentTime += 10; // skip 10 seconds forward
+            }
+    
+            // Fungsi baru untuk menampilkan lirik
+            audio.ontimeupdate = function() {
+                for (let i = 0; i < songLyrics.length; i++) {
+                    if (audio.currentTime >= songLyrics[i].time) {
+                        lyrics.innerText = songLyrics[i].text;
+                    }
+                }
+            };
+        </script>
+    </center>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+</body>
+</html>

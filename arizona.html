@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arizona Zervas Song</title>
+    <link rel="stylesheet" href="musicweb.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <center>
+        <div class="audio-card" style="background-color: gray; margin-bottom: 5rem;">
+            <button onclick="window.location.href='musicweb.html';" style="margin-bottom: 1rem;"><i class="fa fa-arrow-left mr-3"></i>Back to Main Page</button>
+            <img src="https://i.ytimg.com/vi/sq5a0zCOAD0/maxresdefault.jpg" alt="Album Art">
+            <h1 style="font-weight: 800; font-size: larger; margin-bottom: 1rem;">Roxanne</h1>
+            <audio id="audio" controls>
+                <source src="songs/roxxane.mp3" type="audio/mpeg">
+            </audio>
+            <div style="background-color: white; border-radius: 5%; padding: 20px;">
+                <div id="lyrics" style="height: 55px; overflow: auto;"></div>
+            </div>
+            <div style="margin-top: 2rem;">
+                <button onclick="skipBackward()"><i class="fa fa-step-backward mr-3"></i></button>
+                <button onclick="pauseResume()"><i id="playPauseIcon" class="fa fa-play mx-3"></i></button>
+                <button onclick="skipForward()"><i class="fa fa-step-forward ml-3"></i></button>
+            </div>
+        </div>
+        
+        <script>
+            const audio = document.getElementById('audio');
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            const lyrics = document.getElementById('lyrics'); // Baru
+    
+            // Lirik lagu
+            const songLyrics = [
+            { time: 0.45, text: "All for the 'Gram" },
+            { time: 2.71, text: "Bitches love the 'Gram" },
+            { time: 5.46, text: "Brr, Brrr"},
+            { time: 10.62, text: "Brr, Brr, brr (aye)" },
+            { time: 13.87, text: "Skrtt,skrrtt" },
+            { time: 14.63, text: "Roxanne, Roxanne" },
+            { time: 17.61, text: "Äll She wanna do is party all the night"},
+            { time: 20.11, text: "Goddamn, Roxanne" },
+            { time: 22.88, text: "Never gonna love me but its alright" },
+            { time: 25.37, text: "She think im an asshole" },
+            { time: 26.87, text: "She think im a player" },
+            { time: 28.12, text: "She keep running back tough"},
+            { time: 29.62, text: "Only cause i pay up" },
+            { time: 31.12, text: "Roxanne"},
+            { time: 225.27, text: "All she wanna do is party all night" }
+
+            ];
+    
+            function skipBackward() {
+                audio.currentTime -= 10; // skip 10 seconds backward
+            }
+    
+            function pauseResume() {
+                if (audio.paused) {
+                    audio.play();
+                    playPauseIcon.classList.remove('fa-play');
+                    playPauseIcon.classList.add('fa-pause');
+                } else {
+                    audio.pause();
+                    playPauseIcon.classList.remove('fa-pause');
+                    playPauseIcon.classList.add('fa-play');
+                }
+            }
+    
+            function skipForward() {
+                audio.currentTime += 10; // skip 10 seconds forward
+            }
+    
+            // Fungsi baru untuk menampilkan lirik
+            audio.ontimeupdate = function() {
+                for (let i = 0; i < songLyrics.length; i++) {
+                    if (audio.currentTime >= songLyrics[i].time) {
+                        lyrics.innerText = songLyrics[i].text;
+                    }
+                }
+            };
+        </script>
+    </center>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+</body>
+</html>
