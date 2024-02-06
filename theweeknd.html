@@ -35,26 +35,107 @@
         <script>
             const audio = document.getElementById('audio');
             const playPauseIcon = document.getElementById('playPauseIcon');
-            const lyrics = document.getElementById('lyrics'); // Baru
-    
-            // Lirik lagu
-            const songLyrics = [
-            { time: 0.71, text: "Starboy" },
-            { time: 7.69, text: "(feat. Daft Punk)" },
-            { time: 16.09, text: "Im tryna put you in the worst mood, ah" },
-            { time: 18.50, text: "P1 cleaner than your church shoes, ah" },
-            { time: 21.04, text: "Milli point two just to hurt you, ah" },
-            { time: 23.67, text: "All red lamb just to tease you, ah" },
-            { time: 26.07, text: "None of these toys on lease too, ah" },
-            { time: 28.85, text: "Made your whole year in a week too, yeah" },
-            { time: 31.39, text: "Main bitch out of your league too, ah" },
-            { time: 33.83, text: "Side bitch out of your league too, ah" },
-            ];
-    
+            const lyrics = document.getElementById('lyrics');
+        
+            // Your LRC formatted lyrics
+            const lrc = `
+            [00:16.12]I'm tryna put you in the worst mood, ah
+[00:18.42]P1 cleaner than your church shoes, ah
+[00:21.03]Milli point two just to hurt you, ah
+[00:23.44]All red Lamb' just to tease you, ah
+[00:26.05]None of these toys on lease too, ah
+[00:28.72]Made your whole year in a week too, yah
+[00:31.39]Main bitch out your league too, ah
+[00:34.03]Side bitch out of your league too, ah
+[00:36.39]House so empty, need a centerpiece
+[00:39.14]Twenty racks a table cut from ebony
+[00:41.45]Cut that ivory into skinny pieces
+[00:43.99]Then she clean it with her face man I love my baby
+[00:46.88]You talking money, need a hearing aid
+[00:49.52]You talking 'bout me, I don't see a shade
+[00:52.02]Switch up my style, I take any lane
+[00:54.68]I switch up my cup, I kill any pain
+[01:00.60]Look what you've done
+[01:05.41]I'm a motherfuckin' starboy
+[01:10.54]Look what you've done
+[01:15.63]I'm a motherfuckin' starboy
+[01:17.79]Every day a nigga try to test me, ah
+[01:20.38]Every day a nigga try to end me, ah
+[01:22.88]Pull off in that Roadster SV, ah
+[01:25.54]Pockets overweight, gettin' hefty, ah
+[01:27.93]Coming for the king, that's a far cry, ah
+[01:30.86]I come alive in the fall time, I
+[01:33.17]The competition, I don't really listen
+[01:35.57]I'm in the blue Mulsanne bumping New Edition
+[01:38.30]House so empty, need a centerpiece
+[01:40.90]Twenty racks a table cut from ebony
+[01:43.59]Cut that ivory into skinny pieces
+[01:45.83]Then she clean it with her face man I love my baby
+[01:49.09]You talking money, need a hearing aid
+[01:51.34]You talking 'bout me, I don't see a shade
+[01:53.83]Switch up my style, I take any lane
+[01:56.33]I switch up my cup, I kill any pain
+[02:02.09]Look what you've done
+[02:07.58]I'm a motherfuckin' starboy
+[02:13.27]Look what you've done
+[02:17.70]I'm a motherfuckin' starboy
+[02:20.46]Let a nigga Brad Pitt
+[02:21.85]Legend of the fall took the year like a bandit
+[02:24.37]Bought mama a crib and a brand new wagon
+[02:26.61]Now she hit the grocery shop looking lavish
+[02:29.60]Star Trek roof in that Wrath of Khan
+[02:31.60]Girls get loose when they hear this song
+[02:34.50]100 on the dash get me close to God
+[02:36.85]We don't pray for love, we just pray for cars
+[02:40.31]House so empty, need a centerpiece
+[02:42.80]Twenty racks a table cut from ebony
+[02:45.51]Cut that ivory into skinny pieces
+[02:47.87]Then she clean it with her face man I love my baby
+[02:50.77]You talking money, need a hearing aid
+[02:53.41]You talking 'bout me, I don't see a shade
+[02:55.92]Switch up my style, I take any lane
+[02:58.11]I switch up my cup, I kill any pain
+[03:04.65]Look what you've done
+[03:08.90]I'm a motherfuckin' starboy
+[03:14.90]Look what you've done
+[03:19.15]I'm a motherfuckin' starboy
+[03:25.45]Look what you've done
+[03:29.79]I'm a motherfuckin' starboy
+[03:35.46]Look what you've done
+[03:40.27]I'm a motherfuckin' starboy
+            `;
+        
+            // Function to parse LRC format
+            function parseLRC(lrc) {
+                const lines = lrc.split('\n');
+                const songLyrics = [];
+        
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    const timeStart = line.indexOf('[');
+                    const timeEnd = line.indexOf(']');
+        
+                    if (timeStart !== -1 && timeEnd !== -1) {
+                        const time = line.substring(timeStart + 1, timeEnd);
+                        const text = line.substring(timeEnd + 1);
+        
+                        const minutes = parseInt(time.split(':')[0]);
+                        const seconds = parseFloat(time.split(':')[1]);
+        
+                        songLyrics.push({ time: minutes * 60 + seconds, text: text.trim() });
+                    }
+                }
+        
+                return songLyrics;
+            }
+        
+            // Parse the LRC lyrics into the songLyrics array
+            const songLyrics = parseLRC(lrc);
+        
             function skipBackward() {
                 audio.currentTime -= 10; // skip 10 seconds backward
             }
-    
+        
             function pauseResume() {
                 if (audio.paused) {
                     audio.play();
@@ -66,12 +147,12 @@
                     playPauseIcon.classList.add('fa-play');
                 }
             }
-    
+        
             function skipForward() {
                 audio.currentTime += 10; // skip 10 seconds forward
             }
-    
-            // Fungsi baru untuk menampilkan lirik
+        
+            // Function to display lyrics
             audio.ontimeupdate = function() {
                 for (let i = 0; i < songLyrics.length; i++) {
                     if (audio.currentTime >= songLyrics[i].time) {
@@ -80,6 +161,7 @@
                 }
             };
         </script>
+        
     </center>
     
     
