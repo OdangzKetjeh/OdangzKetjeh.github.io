@@ -35,32 +35,113 @@
         <script>
             const audio = document.getElementById('audio');
             const playPauseIcon = document.getElementById('playPauseIcon');
-            const lyrics = document.getElementById('lyrics'); // Baru
-    
-            // Lirik lagu
-            const songLyrics = [
-            { time: 0.45, text: "All for the 'Gram" },
-            { time: 2.71, text: "Bitches love the 'Gram" },
-            { time: 5.46, text: "Brr, Brrr"},
-            { time: 10.62, text: "Brr, Brr, brr (aye)" },
-            { time: 13.87, text: "Skrtt,skrrtt" },
-            { time: 14.63, text: "Roxanne, Roxanne" },
-            { time: 17.61, text: "Äll She wanna do is party all the night"},
-            { time: 20.11, text: "Goddamn, Roxanne" },
-            { time: 22.88, text: "Never gonna love me but its alright" },
-            { time: 25.37, text: "She think im an asshole" },
-            { time: 26.87, text: "She think im a player" },
-            { time: 28.12, text: "She keep running back tough"},
-            { time: 29.62, text: "Only cause i pay up" },
-            { time: 31.12, text: "Roxanne"},
-            { time: 225.27, text: "All she wanna do is party all night" }
-
-            ];
-    
+            const lyrics = document.getElementById('lyrics');
+        
+            // Your LRC formatted lyrics
+            const lrc = `
+            [00:15.05]Roxanne
+            [00:16.30]Roxanne
+[00:18.05]All she wanna do is party all night
+[00:20.55]Goddamn, Roxanne
+[00:23.55]Never gonna love me but it's alright
+[00:25.78]She think I'm a asshole
+[00:27.05]She think I'm a player
+[00:28.29]She keep running back though
+[00:29.80]Only cause I pay up
+[00:31.55]Roxanne
+[00:32.80]Roxanne
+[00:34.53]All she wanna do is party all night
+[00:37.30]Met her at a party in the hills, yeah
+[00:40.05]She just wanna do it for the thrill, yeah
+[00:42.54]Shorty drive a poodle with no top
+[00:45.55]But if I throw this money she gon' drop
+[00:47.80]She dont wait in lines if it's too long
+[00:50.29]She dont drive the whip unless the roof off
+[00:53.03]Only want to call when the cash out
+[00:55.80]Only take the pic when her ass out
+[00:58.91]She from
+[01:00.08]Malibu, malibu
+[01:02.04]If you ain't gotta foreign then she laugh at you
+[01:04.79]Malibu, malibu
+[01:07.53]Spending daddy's money with an attitude
+[01:09.79]Roxanne
+[01:11.29]Roxanne
+[01:12.78]All she wanna do is party all night
+[01:15.04]Goddamn, Roxanne
+[01:18.29]Never gonna love me but it's alright
+[01:20.54]She think I'm a asshole
+[01:22.02]She think I'm a player
+[01:23.29]She keep running back though
+[01:24.53]Only cause I pay up
+[01:26.28]Roxanne
+[01:27.53]Roxanne
+[01:29.29]All she wanna do is party all night
+[01:31.67]I just wanna have fun!
+[01:33.42]In LA, yeah
+[01:34.66]Got no brakes, yeah
+[01:36.17]Living fast, Ricky Bobby shaking bake, yeah
+[01:38.68]See the chain? yeah
+[01:39.93]Issa lake, yeah
+[01:41.42]Swipe the chase, oo
+[01:42.67]Now she wanna date, yeah
+[01:44.43]Straight to NOBU
+[01:45.67]On the coast oo
+[01:46.93]Shorty only like cocaine and whole foods
+[01:49.67]Yeah
+[01:50.42]Snappin all up on the gram
+[01:51.67]Ass going crazy
+[01:52.92]Now she wanna fuck me in the foreign
+[01:54.42]Going 80
+[01:55.67]Up In
+[01:56.42]Malibu, malibu
+[01:58.17]If you ain't gotta foreign then she laugh at you
+[02:01.08]Malibu, malibu
+[02:03.83]Spending daddy's money with an attitude
+[02:06.08]Roxanne
+[02:07.57]Roxanne
+[02:09.08]All she wanna do is party all night
+[02:11.59]Goddamn, Roxanne
+[02:14.57]Never gonna love me but it's alright
+[02:16.82]She think I'm a asshole
+[02:18.32]She think I'm a player
+[02:19.57]She keep running back though
+[02:20.83]Only cause I pay up
+[02:22.57]Roxanne
+[02:23.82]Roxanne
+[02:25.58]All she wanna do is party all night
+            `;
+        
+            // Function to parse LRC format
+            function parseLRC(lrc) {
+                const lines = lrc.split('\n');
+                const songLyrics = [];
+        
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    const timeStart = line.indexOf('[');
+                    const timeEnd = line.indexOf(']');
+        
+                    if (timeStart !== -1 && timeEnd !== -1) {
+                        const time = line.substring(timeStart + 1, timeEnd);
+                        const text = line.substring(timeEnd + 1);
+        
+                        const minutes = parseInt(time.split(':')[0]);
+                        const seconds = parseFloat(time.split(':')[1]);
+        
+                        songLyrics.push({ time: minutes * 60 + seconds, text: text.trim() });
+                    }
+                }
+        
+                return songLyrics;
+            }
+        
+            // Parse the LRC lyrics into the songLyrics array
+            const songLyrics = parseLRC(lrc);
+        
             function skipBackward() {
                 audio.currentTime -= 10; // skip 10 seconds backward
             }
-    
+        
             function pauseResume() {
                 if (audio.paused) {
                     audio.play();
@@ -72,12 +153,12 @@
                     playPauseIcon.classList.add('fa-play');
                 }
             }
-    
+        
             function skipForward() {
                 audio.currentTime += 10; // skip 10 seconds forward
             }
-    
-            // Fungsi baru untuk menampilkan lirik
+        
+            // Function to display lyrics
             audio.ontimeupdate = function() {
                 for (let i = 0; i < songLyrics.length; i++) {
                     if (audio.currentTime >= songLyrics[i].time) {
