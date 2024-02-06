@@ -16,12 +16,13 @@
 
     <center>
         <div class="audio-card" style="background-color: gray; margin-bottom: 5rem;">
-            <button onclick="window.location.href='index.html';" style="margin-bottom: 1rem;"><i class="fa fa-arrow-left mr-3"></i>Back to Main Page</button>
+            <a href="index.html"><i class="fa fa-arrow-left mr-3"></i>Back to Main Page</a>
             <img src="https://images.genius.com/8819608496104d64a6c136b5828d89c9.1000x1000x1.jpg" alt="Album Art">
             <h1 style="font-weight: 800; font-size: larger; margin-bottom: 1rem;">Can I Be Him</h1>
             <audio id="audio" controls>
                 <source src="songs/canibehim.mp3" type="audio/mpeg">
             </audio>
+
             <div style="background-color: white; border-radius: 5%; padding: 20px;">
                 <div id="lyrics" style="height: 55px; overflow: auto;"></div>
             </div>
@@ -35,66 +36,91 @@
         <script>
             const audio = document.getElementById('audio');
             const playPauseIcon = document.getElementById('playPauseIcon');
-            const lyrics = document.getElementById('lyrics'); // Baru
+            const lyrics = document.getElementById('lyrics');
     
-            // Lirik lagu
-            const songLyrics = [
-            { time: 8.37, text: 'You walked into the room' },
-            { time: 11.14, text: 'And now my heart has been stolen' },
-            { time: 16.90, text: 'You took me back in time to when I was unbroken' },
-            { time: 24.43, text: 'Now youre all I want' },
-            { time: 26.94, text: 'And I knew it from the very first moment' },
-            { time: 32.94, text: 'Cause a light came on when I heard that song' },
-            { time: 38.19, text: 'And I want you to sing it again' },
-            { time: 43.70, text: 'I swear that every word you sing' },
-            { time: 47.46, text: 'You wrote them for me' },
-            { time: 52.22, text: 'Like it was a private show' },
-            { time: 55.47, text: 'But I know you never saw me' },
-            { time: 59.98, text: 'When the lights come on and Im on my own' },
-            { time: 64.49, text: 'Will you be there to sing it again?' },
-            { time: 70.49, text: 'Could I be the one you talk about in all your stories?' },
-            { time: 77.26, text: 'Can I be him?' },
-            { time: 81.77, text: 'I heard there was someone but I know he dont deserve you' },
-            { time: 89.27, text: 'If you were mine Id never let anyone hurt you no no' },
-            { time: 97.79, text: 'I wanna dry those tears, kiss those lips' },
-            { time: 102.55, text: 'Its all that Ive been thinking about' },
-            { time: 107.06, text: 'Cause a light came on when I heard that song' },
-            { time: 111.32, text: 'And I want you to sing it again' },
-            { time: 116.57, text: 'I swear that every word you sing' },
-            { time: 120.83, text: 'You wrote them for me' },
-            { time: 125.84, text: 'Like it was a private show' },
-            { time: 128.59, text: 'But I know you never saw me' },
-            { time: 133.60, text: 'When the lights come on and Im on my own' },
-            { time: 137.85, text: 'Will you be there to sing it again?' },
-            { time: 143.61, text: 'Could I be the one you talk about in all your stories?' },
-            { time: 151.37, text: 'Can I be the one?' },
-            { time: 156.14, text: 'Can I be the one?' },
-            { time: 160.14, text: 'Can I be the one?' },
-            { time: 165.14, text: 'Oh, can I, can I be him?' },
-            { time: 170.15, text: 'Wont you sing it again' },
-            { time: 173.91, text: 'Oh, when you sing it again' },
-            { time: 177.17, text: 'Can I be him' },
-            { time: 179.42, text: 'Wont you sing it again' },
-            { time: 182.67, text: 'Oh, when you sing it again' },
-            { time: 186.18, text: 'Can I be him' },
-            { time: 188.43, text: 'I swear that every word you sing' },
-            { time: 191.68, text: 'You wrote them for me' },
-            { time: 197.19, text: 'Like it was a private show' },
-            { time: 199.95, text: 'But I know you never saw me' },
-            { time: 204.96, text: 'When the lights come on and Im on my own' },
-            { time: 208.96, text: 'Will you be there, will you be there' },
-            { time: 214.72, text: 'Can I be the one you talk about in all your stories' },
-            { time: 222.48, text: 'Can I be him?' },
-            { time: 226.99, text: 'Can I be him?' },
-            { time: 231.25, text: 'Can I be him?' },
-            { time: 236.00, text: 'Can I be him?' }
-            ];
-
-    
+            const lrc = `
+            [00:08.37]You walked into the room
+[00:11.14]And now my heart has been stolen
+[00:16.90]You took me back in time to when I was unbroken
+[00:24.43]Now you're all I want
+[00:26.94]And I knew it from the very first moment
+[00:32.94]'Cause a light came on when I heard that song
+[00:38.19]And I want you to sing it again
+[00:43.70]I swear that every word you sing
+[00:47.46]You wrote them for me
+[00:52.22]Like it was a private show
+[00:55.47]But I know you never saw me
+[00:59.98]When the lights come on and I'm on my own
+[01:04.49]Will you be there to sing it again?
+[01:10.49]Could I be the one you talk about in all your stories?
+[01:17.26]Can I be him?
+[01:21.77]I heard there was someone but I know he don't deserve you
+[01:29.27]If you were mine I'd never let anyone hurt you no no
+[01:37.79]I wanna dry those tears, kiss those lips
+[01:42.55]It's all that I've been thinking about
+[01:47.06]'Cause a light came on when I heard that song
+[01:51.32]And I want you to sing it again
+[01:56.57]I swear that every word you sing
+[02:00.83]You wrote them for me
+[02:05.84]Like it was a private show
+[02:08.59]But I know you never saw me
+[02:13.60]When the lights come on and I'm on my own
+[02:17.85]Will you be there to sing it again?
+[02:23.61]Could I be the one you talk about in all your stories?
+[02:31.37]Can I be the one?
+[02:36.14]Can I be the one?
+[02:40.14]Can I be the one?
+[02:45.14]Oh, can I, can I be him?
+[02:50.15]Won't you sing it again
+[02:53.91]Oh, when you sing it again
+[02:57.17]Can I be him
+[02:59.42]Won't you sing it again
+[03:02.67]Oh, when you sing it again
+[03:06.18]Can I be him
+[03:08.43]I swear that every word you sing
+[03:11.68]You wrote them for me
+[03:17.19]Like it was a private show
+[03:19.95]But I know you never saw me
+[03:24.96]When the lights come on and I'm on my own
+[03:28.96]Will you be there, will you be there
+[03:34.72]Can I be the one you talk about in all your stories
+[03:42.48]Can I be him?
+[03:46.99]Can I be him?
+[03:51.25]Can I be him?
+[03:56.00]Can I be him?
+            `;
+        
+            // Function to parse LRC format
+            function parseLRC(lrc) {
+                const lines = lrc.split('\n');
+                const songLyrics = [];
+        
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    const timeStart = line.indexOf('[');
+                    const timeEnd = line.indexOf(']');
+        
+                    if (timeStart !== -1 && timeEnd !== -1) {
+                        const time = line.substring(timeStart + 1, timeEnd);
+                        const text = line.substring(timeEnd + 1);
+        
+                        const minutes = parseInt(time.split(':')[0]);
+                        const seconds = parseFloat(time.split(':')[1]);
+        
+                        songLyrics.push({ time: minutes * 60 + seconds, text: text.trim() });
+                    }
+                }
+        
+                return songLyrics;
+            }
+        
+            // Parse the LRC lyrics into the songLyrics array
+            const songLyrics = parseLRC(lrc);
+        
             function skipBackward() {
                 audio.currentTime -= 10; // skip 10 seconds backward
             }
-    
+        
             function pauseResume() {
                 if (audio.paused) {
                     audio.play();
@@ -106,12 +132,12 @@
                     playPauseIcon.classList.add('fa-play');
                 }
             }
-    
+        
             function skipForward() {
                 audio.currentTime += 10; // skip 10 seconds forward
             }
-    
-            // Fungsi baru untuk menampilkan lirik
+        
+            // Function to display lyrics
             audio.ontimeupdate = function() {
                 for (let i = 0; i < songLyrics.length; i++) {
                     if (audio.currentTime >= songLyrics[i].time) {
