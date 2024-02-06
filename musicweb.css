@@ -2,6 +2,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 /* Use a consistent font-family for all elements */
@@ -9,9 +10,6 @@ body {
     font-family: 'Dosis', sans-serif;
 }
 
-.card img{
-    border-radius: 5%;
-}
 /* Add your styles here */
 .audio-card {
     max-width: 400px;
@@ -24,6 +22,7 @@ body {
 
 img {
     max-width: 100%;
+    height: auto; /* Ensure images maintain aspect ratio */
     border-radius: 8px;
     margin-bottom: 20px;
 }
@@ -31,4 +30,67 @@ img {
 audio {
     width: 100%;
     margin-bottom: 20px;
+}
+
+/* Responsive styles for the artist section */
+.tulisan {
+    flex: 1;
+    margin-left: 7rem;
+    margin-right: 40px;
+    margin-top: 2rem;
+}
+
+.card {
+    flex: 1;
+    margin-left: 10px;
+    margin-right: 5rem;
+    margin-top: 2rem;
+}
+
+/* Responsive styles for the jumbotron section */
+.bg-center {
+    background-size: cover;
+    background-position: center center;
+    height: 60vh; /* Adjust the height based on your preference */
+}
+
+/* Responsive styles for the "Get Started" button */
+.inline-flex {
+    display: inline-flex;
+}
+
+/* Responsive styles for the section with buttons */
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Responsive styles for the heading in the artist section */
+.artis {
+    text-align: center;
+    font-weight: 800;
+    font-size: 2rem; /* Adjust the font size based on your preference */
+    margin-top: 5rem;
+}
+
+/* Responsive styles for the artist cards */
+.james, .the {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5rem;
+}
+
+/* Responsive styles for the buttons in the artist section */
+.inline-flex {
+    display: inline-flex;
+}
+
+/* Styling for the "Get Started" button */
+.bg-blue-700 {
+    background-color: #4C68FF; /* Adjust the color based on your preference */
+}
+
+.bg-blue-800:hover {
+    background-color: #4055B5; /* Adjust the hover color based on your preference */
 }
